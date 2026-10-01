@@ -1,0 +1,345 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Tiệm Hoa Mùa Xuân</title>
+    <style>
+        body{
+            background-color:#f9f9f9;
+            font-family:'Times New Roman', Times, serif;
+            margin: 0;
+            padding:0;
+            color:#333;
+        }
+        header {
+            background-color: #ffffff;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #d81b60;
+            margin: 0;
+        }
+
+        nav a {
+            margin-left: 20px;
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+        }
+
+            nav a:hover {
+                color: #d81b60;
+            }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .auth-link {
+            text-decoration: none;
+            color: #d81b60;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .cart-info {
+            background-color: #fce4ec;
+            padding: 8px 15px;
+            border-radius: 20px;
+            color: #d81b60;
+            font-weight: bold;
+        }
+
+        .hero {
+            background-color: #f8bbd0;
+            color: #880e4f;
+            text-align: center;
+            padding: 60px 20px;
+            margin-bottom: 30px;
+        }
+
+            .hero h2 {
+                font-size: 32px;
+                margin: 0 0 10px 0;
+            }
+
+        main {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .product {
+            background-color: #ffffff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+            .product:hover {
+                transform: translateY(-8px);
+                box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+            }
+
+            .product img {
+                width: 100%;
+                height: 250px;
+                object-fit: cover;
+            }
+
+        .product-info {
+            padding: 15px;
+        }
+
+            .product-info h3 {
+                margin: 0 0 10px 0;
+                color: #333;
+            }
+
+            .product-info p {
+                color: #d81b60;
+                font-weight: bold;
+                font-size: 18px;
+                margin: 0 0 15px 0;
+            }
+
+        button {
+            background-color: #d81b60;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.2s;
+            width: 100%;
+        }
+
+            button:hover {
+                background-color: #ad144d;
+            }
+
+        .modal {
+            display: none; /* Ẩn đi mặc định */
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5); /* Nền đen mờ */
+            align-items: center;
+            justify-content: center;
+        }
+
+            .modal.show {
+                display: flex; /* Hiện modal lên và dùng flex để căn giữa */
+            }
+
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 24px;
+            color: #aaa;
+            cursor: pointer;
+        }
+
+            .close-btn:hover {
+                color: #333;
+            }
+
+        .modal h2 {
+            margin-top: 0;
+            text-align: center;
+            color: #d81b60;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+            .form-group label {
+                display: block;
+                margin-bottom: 5px;
+                font-weight: 500;
+            }
+
+            .form-group input {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                box-sizing: border-box; /* Giữ input không bị tràn khung */
+                font-family: inherit;
+            }
+
+        .form-toggle {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+            .form-toggle a {
+                color: #d81b60;
+                cursor: pointer;
+                text-decoration: underline;
+            }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+        }
+
+        #toast {
+            position: fixed;
+            bottom: -100px;
+            right: 20px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 5px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: bottom 0.4s ease-in-out;
+            z-index: 1000;
+        }
+
+            #toast.show {
+                bottom: 20px;
+            }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">Hoa Mùa Xuân</div>
+        <nav class="nav-link">
+            <a href="#">Trang chủ</a>
+            <a href="#products">Sản phẩm</a>
+        </nav>
+        <div class="header-actions">
+            <span id="user-display" style="display:none; color:#d81b60;font-weight: bold;"></span>
+            <a href="javascript:void(0)" class="auth-link" id="auth-trigger" onclick="openAuthModal()">Đăng nhập </a>
+            <div class="cart-info">
+                Giỏ: <span id="cart-count">0</span>
+            </div>
+        </div>
+    </header>
+    <div class="hero">
+        <h2>Gửi Gắm Yêu Thương Qua Từng Nhánh Hoa</h2>
+        <p>Vui lòng đăng nhập để bắt đầu mua sắm!</p>
+    </div>
+    <main id="products">
+        <h2 style="text-align:center; margin-bottom: 30px">Sản phẩm nổi bật</h2>
+        <div class="products">
+            <!--Sản phẩm 1-->
+            <div class="product">
+                <img src="https://tse4.mm.bing.net/th/id/OIP.fF91vGmPOwXhON7fbiVgowHaFj?r=0&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Hoa Hồng" />
+                <h3>Hoa Hồng Đỏ</h3>
+                <p>450.000 đ</p>
+                <button onclick="addToCart('Hoa Hồng Đỏ')">Thêm vào giỏ</button>
+            </div>
+            <!-- Sản phẩm 2 -->
+            <div class="product">
+                <img src="https://tse4.mm.bing.net/th/id/OIP.uPVsGhCKCgMOdsKRz5CmJQHaHa?r=0&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Hoa Tulip">
+                <h3>Hoa Tulip</h3>
+                <p>680.000 ₫</p>
+                <button onclick="addToCart('Hoa Tulip')">Thêm vào giỏ</button>
+            </div>
+
+            <!-- Sản phẩm 3 -->
+            <div class="product">
+                <img src="https://hoa4mua.vn/wp-content/uploads/2022/03/bo-hoa-cuc-hoa-mi-nho-1.jpg" alt="Hoa Cúc Mini">
+                <h3>Hoa Cúc Nhỏ</h3>
+                <p>350.000 ₫</p>
+                <button onclick="addToCart('Hoa Cúc Nhỏ')">Thêm vào giỏ</button>
+            </div>
+            <!--Sản phẩm 4-->
+            <div class="product">
+                <img src="https://flowersight.com/wp-content/uploads/2023/08/Bo-hoa-cam-tu-cau-danh-tang-cho-nguoi-yeu-min.jpg" alt="Hoa Cẩm Tú Cầu">
+                <h3>Hoa Cẩm Tú Cầu</h3>
+                <p>200.000 ₫</p>
+                <button onclick="addToCart('Cẩm Tú Cầu')">Thêm vào giỏ</button>
+            </div>
+            <!--Sản phẩm 5-->
+            <div class="product">
+                <img src="https://flosa.vn/media/efd193f689f2018b1b74a5d901dc746bbd5bd0f9.jpeg" alt="Chậu Lang Hồ Điệp Cao Cấp">
+                <h3>Chậu Lang Hồ Điệp Cao Cấp</h3>
+                <p>550.000 ₫</p>
+                <button onclick="addToCart('Chậu Lang Hồ Điệp Cao Cấp')">Thêm vào giỏ</button>
+            </div>
+        </div>
+    </main>
+    <div id="auth-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeAuthModal()">&times;</span>
+            <h2 id="modal-title">Đăng nhập</h2>
+            <!--Mục đăng nhập/đăng ký tài khoản-->
+            <form id="auth-form" onsubmit="handleAuthSubmit(event)">
+                <div class="form-group">
+                    <label for="username">Tên tài khoản</label>
+                    <input type="text" id="username" required placeholder="Nhập tên tài khoản của bạn" />
+                </div>
+                <!--Mail sẽ bị ẩn ở đăng nhập và chỉ hiện ở đăng ký-->
+                <div class="form-group" id="email-group" style="display:none;">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="example@gmail.com" />
+                </div>
+                <div class="form-group">
+                    <label for="password">Nhập mật khẩu</label>
+                    <input type="password" id="password" required placeholder="Nhập mật khẩu" />
+                </div>
+                <button type="submit" id="submit-btn">Xác nhập đăng nhập</button>
+            </form>
+            <div class="form-toggle">
+                <span id="toggle-text">Chưa có tài khoản?</span>
+                <a href="#" id="toggle-link">Đăng ký ngay</a>
+            </div>
+        </div>
+    </div>
+    <div id="toast">Thông báo sẽ hiện ở đây!</div>
+    <footer>
+    <p>Liên hệ: 0123456789 - 123 Sư Vạn Hạnh</p>
+    <p>&copy; 2026 Tiệm Hoa Mùa Xuân.Thiết kế bởi Team</p>
+        </footer>
+    <script src="~/Scripts/Scriptsadmin/Script.js"></script>
+</body>
+</html>
